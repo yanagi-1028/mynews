@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Profile;
+use App\History;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -20,7 +22,7 @@ public function create(Request $request)
 
       $news = new Profile;
       $form = $request->all();
-
+      unset($form['_token']);
       $news->fill($form);
       $news->save();
 
@@ -30,10 +32,11 @@ public function create(Request $request)
 public function edit(Request $request)
 {
     $news = Profile::find($request->id);
-    if (empty($news)) {
+     if (empty($news)) {
         abort(404);
     }
-    return view('admin.profile.edit', ['news_form' => $news]);
+    
+    return view('admin.profile.create', ['news_form' => $profile]);
 }
 
 public function update(Request $request)
@@ -43,5 +46,8 @@ public function update(Request $request)
     $news_form = $request->all();
     unset($news_form['_token']);
     return redirect('admin/profile/edit');
+
  }
+
+
 }
