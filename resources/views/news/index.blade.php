@@ -16,6 +16,7 @@
                                 </div>
                                 <div class="title p-2">
                                     <h1>{{ str_limit($headline->title, 70) }}</h1>
+                                    <p>追加開発しました。</p>
                                 </div>
                             </div>
                         </div>
