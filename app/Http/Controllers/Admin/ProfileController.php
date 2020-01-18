@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Profile;
-use App\History;
+use App\ProfileHistory;
 use Carbon\Carbon;
 
 class ProfileController extends Controller
@@ -42,9 +42,9 @@ public function edit(Request $request)
 public function update(Request $request)
 {
     $this->validate($request, Profile::$rules);
-    $news = Profile::find($request->id);
-    $news_form = $request->all();
-    unset($news_form['_token']);
+    $profiles = Profile::find($request->id);
+    $profiles_form = $request->all();
+    unset($profiles_form['_token']);
     return redirect('admin/profile/edit');
 
  }
