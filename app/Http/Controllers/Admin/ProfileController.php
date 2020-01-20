@@ -20,32 +20,41 @@ public function create(Request $request)
 {
     $this->validate($request, Profile::$rules);
 
-      $news = new Profile;
+      $profile = new Profile;
       $form = $request->all();
       unset($form['_token']);
-      $news->fill($form);
-      $news->save();
+      $profile->fill($form);
+      $profile->save();
 
     return redirect('admin/profile/create');
 }
 
 public function edit(Request $request)
 {
-    $news = Profile::find($request->id);
-     if (empty($news)) {
+    $profile = Profile::find($request->id);
+     if (empty($profile)) {
         abort(404);
     }
     
-    return view('admin.profile.create', ['news_form' => $profile]);
+    return view('admin.profile.edit', ['profile_form' => $profile]);
 }
 
 public function update(Request $request)
 {
     $this->validate($request, Profile::$rules);
-    $profiles = Profile::find($request->id);
-    $profiles_form = $request->all();
-    unset($profiles_form['_token']);
+    $profile = Profile::find($request->id);
+    $profile_form = $request->all();
+    unset($profile_form['_token']);
+    $profile->fill($profile_form)->save();
+    
+    $profilehistory = new ProfileHistory;
+    $profilehistory->profile_id = $profile->id;
+    $profilehistory->edited_at = Carbon::now();
+    $profilehistory->save();
+
     return redirect('admin/profile/edit');
+    
+    
 
  }
 
